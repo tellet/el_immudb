@@ -33,6 +33,7 @@ Logged data:
 ### Prerequisites
 * Python 3.10
 * pip
+* Proper value of X_API_KEY (and possibly COLLECTION, LEDGER and API_PATH) in [.env](.env) file 
 
 From [project root](.) run the following commands:
 ```shell

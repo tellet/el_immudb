@@ -14,7 +14,7 @@ HEADERS = {
     }
 
 
-def get_document_proof(document_id: str, transaction_id: str) -> Response:
+def get_document_proof(document_id: str, transaction_id: int) -> Response:
     url = f'{IMMUDB_BASE_URL}/{API_PATH}/ledger/{LEDGER}/collection/{COLLECTION}/document/{document_id}/proof'
     data = {
         'transactionId': transaction_id
@@ -44,15 +44,20 @@ def get_documents_count() -> Response:
     return response
 
 
-def add_document(event: str) -> Response:
+def add_document(event: str, api_key: str = X_API_KEY) -> Response:
     url = f'{IMMUDB_BASE_URL}/{API_PATH}/ledger/{LEDGER}/collection/{COLLECTION}/document'
     data = {
         'timestamp': int(time.time()),
         'ip': '127.0.0.1',
         'event': event
     }
+    headers = {
+        'Accept': 'application/json',
+        'X-API-Key': api_key,
+        'Content-Type': 'application/json'
+    }
 
-    response = requests.put(url, json=data, headers=HEADERS)
+    response = requests.put(url, json=data, headers=headers)
     if response.status_code == 200:
         logger.info(f'{url} response is OK')
     else:
